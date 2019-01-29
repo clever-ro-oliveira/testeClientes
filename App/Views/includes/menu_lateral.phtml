@@ -1,0 +1,22 @@
+<aside class="sidebar">
+    <div class="scrollbar-inner">
+
+        <ul class="navigation">
+
+			<li class="navigation__sub navigation__sub--active navigation__sub--toggled" >
+				<a href="" data-ma-action="submenu-toggle"><i class="zmdi zmdi-accounts"></i> Clientes</a>
+
+				<ul style="display: block;" >
+					<li <?=$_SESSION[DB_DATABASE]['rotaUrl'] == "/cadastrar" ? 'class="navigation__active"' : ""?> >
+						<a href="<?=BASE_SITE?>cadastrar">Cadastrar Unidade</a>
+					</li>
+
+					<li <?=$_SESSION[DB_DATABASE]['rotaUrl'] != "/cadastrar" ? 'class="navigation__active"' : ""?> >
+						<a href="<?=BASE_SITE?>">Listar Unidades</a>
+					</li>
+				</ul>
+			</li>
+           
+        </ul>
+    </div>
+</aside>

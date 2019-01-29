@@ -1,0 +1,389 @@
+$corPadrao: #00549e;
+
+@mixin ma-theme($color) {
+  .header,
+  .login__block__header,
+  .login__block__btn {
+    background-color: $color;
+  }
+
+  .navigation__sub--active > a,
+  .navigation__active > a,
+  .navigation__active:before {
+    color: $color;
+  }
+
+  .top-menu {
+    & > li.active {
+      box-shadow: inset 0 -2px 0 $color;
+    }
+  }
+  .custom-radio .custom-control-indicator:before{
+    background-color: $color;
+    left: 2px !important;
+    top: 2px !important;
+  }
+  .custom-control-input:checked~.custom-control-indicator{
+    border-color: $color;
+  }
+  .custom-control-indicator{
+      top: inherit;
+      width: 17px;
+      height: 17px;
+  }
+  .form-group__bar{
+    &:before{
+      background-color: $color;
+    }
+    &:after{
+      background-color: $color;
+    }
+  }
+
+  textarea.form-control:focus{
+    border-bottom: 2px solid $color !important;
+  }
+
+  .dataTables_filter>label input[type=search], 
+  .dataTables_filter>label select, 
+  .dataTables_length>label input[type=search], 
+  .dataTables_length>label select{
+    border-bottom: 1px solid #464a4c !important;
+    &:focus{
+      border-bottom: 2px solid $color !important;
+    }
+  }
+
+  .toggle-switch__checkbox:checked~.toggle-switch__helper:after{
+    background-color: $color;
+  }
+
+  .hourglass-temp{
+    color: $color;
+  }
+
+  .botao-card{
+    button{
+      background-color: $color;
+      color: white;
+    }
+  }
+
+  .page-loader__spinner svg circle {
+    stroke: $color;
+    stroke-dasharray: 1,200;
+    stroke-dashoffset: 0;
+    animation: dash 1.5s ease-in-out infinite;
+    stroke-linecap: round;
+  }
+
+  .divpaginacao
+  {
+    background-color: #FFF !important;
+    text-align: right !important;
+    .pagination{
+      .active>a{
+        background-color: $color !important;
+      }
+      .texto{
+        width: 70px !important;
+        a{
+          width: 70px !important;
+          border-radius: 20px !important;
+        }
+      }
+    }
+  }
+
+  .nav-tabs .nav-link:before {
+    background-color: $color;
+  }
+
+  .note-editable:focus{
+    border-color: $color !important;
+  }
+
+  .destaque {
+      color: $color;
+  }
+
+  .imageBox{
+    border: 2px solid $color !important;
+    .thumbBox {
+      box-shadow: 0 0 0 1000px $color+CC !important;
+    }
+  }
+
+  .box_post .campofile {
+    border: 2px solid $color !important;
+  }
+
+}
+
+.note-popover{
+  display: none !important;
+}
+
+.note-editor{
+  border: none !important;
+
+  .note-toolbar{
+    border: 1px solid #a9a9a9;
+    border-bottom: none !important;
+  }
+
+  .note-editable{
+    border: 1px solid #a9a9a9;
+    overflow: hidden !important;
+  }
+}
+  
+a{
+  color: #707070;
+}
+a:focus, a:hover {
+  color: #333;
+}
+
+.tags{
+  input{
+    width: 100%;
+    border-right: none !important;
+    border-left: none!important;
+    border-top: none !important;
+    border-bottom: 1px solid #464a4c !important;
+  }
+}
+
+.tagBadge{
+  margin-right: 5px !important;
+  margin-top: 5px !important;
+  button{
+    margin-top: -5px !important;
+  }
+}
+  
+.pagination {
+    border-radius: 0;
+    
+    & > li {
+        margin: 0 2px;
+        display: inline-block;
+        vertical-align: top;
+        
+        & > a,
+        & > span {
+            border-radius: 50% !important;
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            line-height: 38px;
+            text-align: center;
+            font-size: 14px;
+            z-index: 1;
+            position: relative;
+            cursor: pointer;
+            background-clip: padding-box;
+            
+            & > .zmdi {
+                font-size: 22px;
+                line-height: 39px;
+            }
+        }
+         
+    }
+}
+
+[data-ma-theme="meuTema"] {
+  @include ma-theme($corPadrao);
+}
+
+.form-control{
+  border-bottom: 1px solid #464a4c !important;
+}
+
+
+
+.errorForm{
+  border-bottom: 2px solid #F00 !important;
+}
+
+.login__block{
+  max-width: 500px !important;
+  .login__block__header{
+    img{
+      width: auto !important;
+      height: auto !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+  }
+}
+
+.form-group--float {
+  margin-top: 0 !important;
+}
+
+.table-responsive {
+    overflow-y: hidden !important;
+}
+
+a{
+  color: #000000 !important;
+}
+
+.form-group--float {
+  margin-top: 0 !important;
+}
+
+.custom-file{
+  position:relative;  
+  display:inline-block;max-width:100%;
+  height:2.5rem;
+  margin-bottom:0;
+  cursor:pointer
+}
+.custom-file-input{
+  min-width:14rem;
+  max-width:100%;
+  height:2.5rem;
+  margin:0;
+  filter:alpha(opacity=0);
+  opacity:0
+}
+.custom-file-control{
+  position:absolute;
+  top:0;
+  right:0;
+  left:0;
+  z-index:5;
+  height:2.5rem;
+  padding:.5rem 1rem;
+  line-height:1.5;
+  color:#464a4c;
+  pointer-events:none;
+  -webkit-user-select:none;
+  -moz-user-select:none;
+  -ms-user-select:none;
+  user-select:none;
+  background-color:#fff;
+  border:1px solid rgba(0,0,0,.15);
+  border-radius:.25rem
+}
+.custom-file-control::after{
+  content:"Selecione um arquivo"
+}
+.custom-file-control::before{
+  position:absolute;
+  top:-1px;
+  right:-1px;
+  bottom:-1px;
+  z-index:6;
+  display:block;
+  height:2.5rem;
+  padding:.5rem 1rem;
+  line-height:1.5;
+  color:#464a4c;
+  background-color:#eceeef;
+  border:1px solid rgba(0,0,0,.15);
+  border-radius:0 .25rem .25rem 0
+}
+.custom-file-control::before{
+  content:"Selecionar"
+}
+
+.flot-chart-legends{
+  .legendLabel{
+    text-align: left;
+  }
+}
+
+.top-nav__notifications .listview__scroll{
+  height: auto !important;
+  max-height: 350px !important;
+}
+
+.top-nav{
+  i{
+    color: #FFF;
+  }
+}
+
+
+.centro-spin{
+  width: 100%;
+  top: 0;
+  justify-content: center;
+  display: flex;
+}
+
+// Spinning Icons
+// --------------------------
+
+.fa-spin {
+  -webkit-animation: fa-spin 2s infinite linear;
+          animation: fa-spin 2s infinite linear;
+}
+
+.fa-pulse {
+  -webkit-animation: fa-spin 1s infinite steps(8);
+          animation: fa-spin 1s infinite steps(8);
+}
+
+@-webkit-keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@keyframes fa-spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(359deg);
+            transform: rotate(359deg);
+  }
+}
+
+@media (max-width: 768px){
+  .divpaginacao{
+    text-align: center !important;
+    .pagination
+    {
+      li
+      {
+        margin: 0 0 !important;
+        a
+        {
+          width: 26px !important;
+          height: 26px !important;
+          line-height: 24px !important;
+          font-size: 12px !important;
+          .zmdi
+          {
+            line-height: 25px !important;
+          }
+        }
+      }
+      .texto{
+        width: 55px !important;
+        a
+        {
+          width: 55px !important;
+          border-radius: 13px !important;
+        }
+      }
+    }
+  }
+
+  .thAcoes{
+    width: 100px !important;
+  }
+}

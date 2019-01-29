@@ -1,0 +1,39 @@
+<footer class="footer hidden-xs-down">
+    <p>Copyright &copy; <?=date('Y') > 2019 ? '2019 - '.date('Y') : '2019'?> <?=NOME_CLIENTE?></p>
+</footer>
+<script type="text/javascript">
+    $(function()
+    {
+        function notify(message, type){
+            $.growl({
+                message: message
+            },{
+                type: type,
+                allow_dismiss: false,
+                label: 'Cancel',
+                className: 'btn-xs btn-inverse',
+                placement: {
+                    from: 'bottom',
+                    align: 'left'
+                },
+                delay: 2500,
+                animate: {
+                    enter: 'animated fadeInUp',
+                    exit: 'animated fadeOutDown'
+                },
+                offset: {
+                    x: 30,
+                    y: 30
+                }
+            });
+        };
+        <?php if(@$_SESSION[DB_DATABASE]['welcome']):?>
+            setTimeout(function () {
+                if (!$('.login-content')[0]) {
+                    notify('Bem-vindo de volta <?=$_SESSION[DB_DATABASE]['nome']?> ;)', 'inverse');
+                }
+            }, 1500)
+        <?php $_SESSION[DB_DATABASE]['welcome'] = false;
+        endif;?>
+    });
+</script>

@@ -1,0 +1,136 @@
+<div class="card">
+    <div class="card-header">
+    <div class="botao_topo">
+        <button class="btn bgm-gray btn_novo waves-effect" onclick="location.href='<?=BASE_SITE?>cadastrar'">
+            <i class="zmdi zmdi-plus-circle-o"></i>
+            Novo Cliente
+        </button>
+        &nbsp;
+        <button class="btn btn-danger btn_excluir_selecionados waves-effect invisible">
+            <i class="zmdi zmdi-delete"></i>
+            Excluir Selecionados
+        </button>
+    </div>
+        <div class="table-responsive">
+            <table id="data-table-basic" class="table table-bordered">
+                <thead class="thead-default">
+                <tr>
+                    <th style="width: 5% !important; text-align: center;" >
+                        <label class="checkbox m-t-0" data-toggle="tooltip" data-placement="right" title="Selecionar todos">
+                            <input type="checkbox" />
+                            <i class="input-helper"></i>
+                        </label>
+                    </th>
+                    <th>
+                        Cliente
+                    </th>
+                    <th width="7.5%">Tipo</th>
+                    <th width="15%">Ações</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($this->view->dados as $f):?>
+                    <tr>
+                        <td>
+                            <label class="checkbox m-t-0">
+                                <input type="checkbox" name="registros[]" value="<?=$f['id']?>" />
+                                <i class="input-helper"></i>
+                            </label>
+                        </td>
+                        <td><?=$f['cpf'] > 0 ? $f['nome'] . " " . $f['sobrenome'] : $f['nome_fantasia'] . " (" . $f['razao'] . ")"?></td>
+                        <td><?=$f['cpf'] > 0 ? "PF" : "PJ"?></td>
+                        <td align="center">
+                            <button class="btn bgm-gray waves-effect" data-toggle="tooltip" data-placement="top" title="Editar" onclick="location.href='<?=BASE_SITE?>cadastrar/<?=$f['id']?>'">
+                                <i class="zmdi zmdi-edit"></i>
+                            </button>
+                            <span class="visible-xs" style="clear: both; margin-bottom: 5px;"></span>
+                            <span class="hidden-xs">&nbsp;</span>
+                            <button class="btn btn-danger waves-effect exclui" data-texto="<?=$f['nome'] ? $f['nome'] : $f['razao']?>" data-id="<?=$f['id']?>" data-toggle="tooltip" data-placement="top" title="Excluir">
+                                <i class="zmdi zmdi-delete"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <?php
+                endforeach;?>
+                </tbody>
+            </table>
+        </div>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+        $('#data-table-basic').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": [0,3] }
+            ],
+            "autoWidth": false,
+            "order": [[1,"asc"],[2,"asc"]]
+        });
+
+        $(document).on('click', 'th input:checkbox' , function(){
+            var count = 0;
+
+            var that = this;
+            $(this).closest('table').find('tr > td:first-child input:checkbox').each(function(){
+                this.checked = that.checked;
+
+                //$(this).closest('tr').toggleClass('selected');
+                if($(this).is(":checked"))
+                    count++;
+            });
+
+            if(count == 0)
+                $(".btn_excluir_selecionados").addClass("invisible");
+            else
+                $(".btn_excluir_selecionados").removeClass("invisible");
+        });
+
+        $("#data-table-basic tbody input:checkbox").click(function(){
+            var count = 0;
+
+            $('#data-table-basic tbody :checkbox:checked').each(function(i){
+                count++;
+            });
+
+            if(count == 0)
+                $(".btn_excluir_selecionados").addClass("invisible");
+            else
+                $(".btn_excluir_selecionados").removeClass("invisible");
+        });
+
+        var tabela = "clientes";
+        $(".btn_excluir_selecionados").click(function(){
+            var array_de_ids = Array();
+
+            $('#data-table-basic tbody :checkbox:checked').each(function(i){
+                array_de_ids.push($(this).val());
+            });
+
+            var lista_de_ids = array_de_ids.join();
+            var titulo = "Excluir Clientes";
+            var texto = "Deseja realmente excluir os clientes selecionados?";
+            var tipo = "idstoarray";//todos os ids foram convertidos em um array
+            var txt_retorno = "Os clientes";
+            var txt_exc = "excluídos";
+            excluir_registro("<?=BASE_SITE?>",titulo,texto,tabela,tipo,lista_de_ids,txt_retorno,txt_exc);
+        });
+
+        $(".exclui").click(function(){
+            var lista_de_ids = $(this).data("id");
+            var titulo = "Excluir Cliente";
+            var texto = "Deseja realmente excluir o cliente "+$(this).data("texto")+"?";
+            var tipo = "id";
+            var txt_retorno = "O cliente "+$(this).data("texto");
+            var txt_exc = "excluído";
+            excluir_registro("<?=BASE_SITE?>",titulo,texto,tabela,tipo,lista_de_ids,txt_retorno,txt_exc);
+        })
+
+
+        <?php if(isset($this->view->retorno)):?>
+        swal("<?=$this->view->retorno == "ok" ? "Sucesso" : "Opa! Alguma coisa está errada" ?>",
+            "<?=$this->view->retorno == "ok" ? "O cliente foi cadastrado/editado com sucesso :D" : "Ocorreu um erro ao cadastrar/editar o cliente ;(" ?>", "<?=$this->view->retorno == "ok" ? "success" : "warning" ?>")
+        <?php
+        endif;?>
+
+    } );
+</script>

@@ -1,0 +1,78 @@
+<?php
+if ($this->view->resul > 0 && $this->view->totalPaginas > 1)
+{
+    $max_links = 1;
+    $prev = $this->view->pagina - 1;
+    if($prev < 1)
+        $prev = 1;
+
+    $prox = $this->view->pagina + 1;
+    if($prox > $this->view->totalPaginas)
+        $prox = $this->view->totalPaginas;
+
+    $novaUrl = ltrim( $this->view->url, "/" );
+    //retira o retorno de cadastro
+    $novaUrl = str_replace( "/ok", "", str_replace( "/erro", "", $novaUrl ) );
+    if( @$this->view->temPag )
+    {
+        $separa = @explode("/", $novaUrl );
+        //tira a ultima posição
+        @array_pop($separa);
+        //monta novamente a url
+        $novaUrl = @implode("/",$separa) . "/";
+    }
+    else
+        $novaUrl .= "/";
+
+    $de = ($this->view->limite * $this->view->pagina) - ($this->view->limite - 1);
+    $ate = $this->view->limite * $this->view->pagina;
+
+    ?>
+    <div class="col-12 divpaginacao">
+        <div class="col-12 visible-xs-up text-center mt-5">
+            <?=$de?> a <?=$ate <= $this->view->resul ? $ate : $this->view->resul?> de <?=$this->view->resul?> registros
+        </div>
+        <div class="col-12">
+            <ul class="pagination justify-content-center">
+                <li class="page-item <?= $this->view->pagina <= 1 ? "disabled" : ""?>">
+                    <a href="<?=$this->view->pagina <= 1 ? '#' : BASE_SITE.$novaUrl.$prev;?>" class="page-link tooltip-info" data-rel="tooltip" data-placement="left" title="Anterior">
+                        <i class="zmdi zmdi-chevron-left"></i>
+                    </a>
+                </li>
+                <li class="page-item texto <?php echo $this->view->pagina == 1 ? "active" : "";?>" ><a href="<?=BASE_SITE.$novaUrl?>1" class="page-link tooltip-info" data-rel="tooltip" data-placement="bottom" title="P&aacute;gina 1">Primeira</a></li>
+
+                <?php $contador = 1;
+                for($i = 2; $i <= ($this->view->totalPaginas - 1); $i++):
+                    if(
+                        (
+                            $i == $this->view->pagina ||
+                            $i == ($this->view->pagina - 1) ||
+                            $i == ($this->view->pagina + 1) ||
+                            $this->view->pagina <= 2 ||
+                            $i == ($this->view->totalPaginas - 3) ||
+                            $i == ($this->view->totalPaginas - 2)
+                        )
+                        && $contador <= 3
+                    ):
+                        $classe = $this->view->pagina == $i ? "active" : "";?>
+                        <li class="page-item <?=$classe?>">
+                            <a class="page-link" href="<?=BASE_SITE.$novaUrl.$i?>" ><?=$i?></a>
+                        </li>
+                        <?php $contador++;
+                    endif;
+                    if($contador > 3)
+                        break;
+                endfor;?>
+                <li class="page-item texto <?php echo $this->view->pagina == $this->view->totalPaginas ? "active" : "";?>" ><a href="<?=BASE_SITE.$novaUrl.$this->view->totalPaginas?>" class="page-link tooltip-info" data-rel="tooltip" data-placement="bottom" title="P&aacute;gina <?=$this->view->totalPaginas?>">Última</a></li>
+
+                <li class="page-item  <?= $this->view->pagina == $this->view->totalPaginas ? "disabled" : ""?>">
+                    <a href="<?= $this->view->pagina == $this->view->totalPaginas ? '#' : BASE_SITE.$novaUrl.$prox?>" class="page-link tooltip-info" data-rel="tooltip" data-placement="right" title="Pr&oacute;xima">
+                        <i class="zmdi zmdi-chevron-right"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <?php
+}
+?>

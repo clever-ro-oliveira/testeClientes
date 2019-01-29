@@ -1,0 +1,240 @@
+<div class="card">
+    <div class="card-header">
+    <form class="form-horizontal" action="<?=BASE_SITE?>cadastro" method="post" enctype="multipart/form-data" id="validation-form">
+        <input type="hidden" name="id-cond" value="<?=@$this->view->dados['id']?>" />
+        <div class="row pt-1">
+            <div class="col-12 col-sm-4" style="margin-top: -15px;">
+                <label class="label_tit">Tipo do Cadastro</label>
+                <br />
+                <label class="custom-control custom-radio">
+                    <input type="radio" name="pessoa-cond" value="f" <?= !isset($this->view->dados['cpf']) ||
+                    @$this->view->dados['cpf'] ? "checked" : ""?> class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Pessoa Física</span>
+                </label>
+
+                <label class="custom-control custom-radio">
+                    <input type="radio" name="pessoa-cond" value="j" <?=@$this->view->dados['cnpj'] > 0 ? "checked" : ""?> class="custom-control-input">
+                    <span class="custom-control-indicator"></span>
+                    <span class="custom-control-description">Pessoa Jurídica</span>
+                </label>
+            </div>
+            <div class="col-12 col-sm-2 pr-1 pessoaf">
+                <div class="form-group form-group--float">
+                    <input type="text" name="cpf-num"  class="form-control required" value="<?=@$this->view->dados['cpf'] > 0 ? $this->mascara(@$this->view->dados['cpf'],'###.###.###-##') : ""?>"  maxlength="14" onkeyup="mascara(this, mcpf);">
+                    <label>CPF</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-12 col-sm-2 pr-1 pessoaj d-none">
+                <div class="form-group form-group--float">
+                    <input type="text" name="cnpj-num"  class="form-control" value="<?=@$this->view->dados['cnpj'] > 0 ? $this->mascara(@$this->view->dados['cnpj'],'##.###.###/####-##') : ""?>"  maxlength="18" onkeyup="mascara(this, mcnpj);">
+                    <label>CNPJ</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3 pr-1 pessoaf">
+                <div class="form-group form-group--float">
+                    <input type="text" name="nome-string"  class="form-control required "
+                           value="<?=@$this->view->dados['nome']?>">
+                    <label>Nome</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3 pr-1 pessoaf">
+                <div class="form-group form-group--float">
+                    <input type="text" name="sobrenome-string"  class="form-control required " maxlength="15"
+                           value="<?=@$this->view->dados['sobrenome']?>">
+                    <label>Sobrenome</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3 pr-1 pessoaj d-none">
+                <div class="form-group form-group--float">
+                    <input type="text" name="razao-string"  class="form-control "
+                           value="<?=@$this->view->dados['razao']?>">
+                    <label>Razão Social</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3 pr-1 pessoaj d-none">
+                <div class="form-group form-group--float">
+                    <input type="text" name="nome_fantasia-string"  class="form-control "
+                           value="<?=@$this->view->dados['nome_fantasia']?>">
+                    <label>Nome Fantasia</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-sm-1 pt-5">
+			<div class="col-12 col-sm-2 pessoaf">
+				<div class="form-group form-group--float">
+					<input type="text" id="dataIniciar" name="data_nasc-date" class="form-control fg-input text-center dataPicker required" value="<?= @$this->view->dados['data_nasc'] ? date("d/m/Y", strtotime( $this->view->dados['data_nasc'] ) ) : ""?>" readonly >
+					<label class="fg-label">Data de Nascimento</label>
+					<i class="form-group__bar"></i>
+				</div>
+			</div>
+            <div class="col-6 col-sm-2 pr-1">
+                <div class="form-group form-group--float">
+                    <input type="text" name="cep-num" class="form-control required " maxlength="9" onkeyup="mascara(this, mcep);" value="<?=@$this->view->dados['cep'] ? $this->mascara(@$this->view->dados['cep'],'#####-###') : ""?>" id="cep" <?=@$this->view->dados['cep'] ? "" : ""?>>
+                    <label>CEP</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 pr-1">
+                <div class="form-group form-group--float">
+                    <input type="text" name="endereco-string" class="form-control required" value="<?=@$this->view->dados['endereco']?>" id="endereco">
+                    <label>Endereço</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-12 col-sm-1 pr-1">
+                <div class="form-group form-group--float">
+                    <input type="text" name="numero-string" class="form-control required" value="<?=@$this->view->dados['numero']?>" id="numero" >
+                    <label>Número</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-12 col-sm-3 pr-1 divbairro">
+                <div class="form-group form-group--float">
+                    <input type="text" name="bairro-string" class="form-control required" value="<?=@$this->view->dados['bairro']?>" id="bairro">
+                    <label>Bairro</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-sm-1 pt-5">
+            <div class="col-12 col-sm-6 pr-1">
+                <div class="form-group form-group--float">
+                    <input type="text" name="cidade-string" class="form-control required" value="<?=@$this->view->dados['cidade']?>" id="cidade">
+                    <label>Cidade</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+            <div class="col-6 col-sm-1 pr-1">
+                <div class="form-group form-group--float">
+                    <input type="text" name="estado-string" class="form-control required text-uppercase "
+                           value="<?=@$this->view->dados['estado']?>" id="estado" maxlength="2">
+                    <label>Estado</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+           <div class="col-12 col-sm-5 pr-1">
+                <div class="form-group form-group--float">
+                    <input type="text" name="complemento-string" class="form-control " value="<?=@$this->view->dados['complemento']?>">
+                    <label>Complemento</label>
+                    <i class="form-group__bar"></i>
+                </div>
+            </div>
+        </div>
+        <div class="row p-10">
+            <div class="col-12 text-center">
+                <button class="btn btn-gray btn-lg btn-icon-text waves-effect"><i class="zmdi zmdi-floppy"></i> Salvar </button>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function(){
+        $('[data-rel=tooltip]').tooltip();
+		
+		$("input[name=pessoa-cond]").click(function(){
+			if($(this).val() == 'f')
+			{
+				$(".pessoaf").removeClass("d-none");
+				$(".pessoaj").addClass("d-none");
+				$(".pessoaf input").addClass("required");
+				$(".pessoaj input").removeClass("required");
+				$(".divbairro").removeClass("col-sm-5").addClass("col-sm-3")
+			}
+			else
+			{
+				$(".pessoaj").removeClass("d-none");
+				$(".pessoaf").addClass("d-none");
+				$(".pessoaj input").addClass("required");
+				$(".pessoaf input").removeClass("required");
+				$(".divbairro").removeClass("col-sm-3").addClass("col-sm-5")
+			}
+		});
+		<?php if( @$this->view->dados['cnpj'] > 0 ):?>
+			$(".pessoaj").removeClass("d-none");
+			$(".pessoaf").addClass("d-none");
+			$(".pessoaj input").addClass("required");
+			$(".pessoaf input").removeClass("required");
+			$(".divbairro").removeClass("col-sm-3").addClass("col-sm-5")
+		<?php
+		endif?>
+		
+		$("input[name=cpf-num]").blur(function(){
+			if($(this).val() && ver_cpf($(this).val()) == false)
+			{
+				swal("CPF Inválido", "Insira um número de CPF válido!","warning")
+				$(this).val("");
+			}
+		});
+
+        $("#cep").blur(function() {
+            var cep = $(this).val().replace(/\D/g, '');
+
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if(validacep.test(cep)) {
+
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("//viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados) {
+
+                        if (!("erro" in dados)) {
+                            //Atualiza os campos com os valores da consulta.
+                            $("#endereco").val(dados.logradouro).focus();
+                            $("#bairro").val(dados.bairro).focus();
+                            $("#cidade").val(dados.localidade).focus();
+                            $("#estado").val(dados.uf).focus();
+                            $("#numero").focus();
+                        } //end if.
+                        else {
+                            //CEP pesquisado não foi encontrado.
+                            swal("","Não conseguimos encontrar o endereço :( <br>Confira o seu CEP ou preencha " +
+                                "manualmente.","warning");
+                        }
+                    });
+                } //end if.
+                else {
+                    //cep é inválido.
+                    swal("","Opa! Esse CEP é inválido :(<br>Confira o seu CEP e tente novamente.","warning");
+
+                    //$("#cep").focus();
+                }
+            } //end if.
+        });
+		
+
+        $('#validation-form').submit(function(){
+            var retorno = true;
+            $(".required").each(function (i,e) {
+                if(e.value == "") {
+                    $(this).parent().addClass("errorForm");
+                    retorno = false;
+                }
+            })
+
+            return retorno;
+        });
+
+        $(".required").click(function(){
+            $(this).parent().removeClass("errorForm");
+        })
+
+		$(".dataPicker").flatpickr({
+            dateFormat: "d/m/Y",
+            locale: "pt",
+            maxDate: new Date("<?= date("m/d/Y", strtotime("-19years"))?>")
+        });
+		
+    });
+</script>
